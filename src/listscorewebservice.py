@@ -19,14 +19,14 @@ app = Flask('scorelistservice')
 
 resources={
     "sentimiento":"data/sentimiento.txt",
-    "affin":"data/afinn.txt",
+    "afinn":"data/afinn.txt",
     "whissell":"data/whissell.txt",
     "sentiwn":"data/sentiwn.txt",
 }
 
 def load_resource(name,namefile):
     resource={}
-    if name in ["sentimiento","affin"]:
+    if name in ["sentimiento","afinn"]:
         for line in open(namefile):
             line=line.strip()
             if len(line)==0 or line.startswith("#"):
@@ -87,15 +87,15 @@ def score_sentimiento_pos():
     res=score1(text,"sentimiento")
     return json.dumps({"scores":res},ensure_ascii=False) 
 
-@app.route('/api/v1.0/score/affin/<string:sntc>',methods=['GET'] )
+@app.route('/api/v1.0/score/afinn/<string:sntc>',methods=['GET'] )
 def score_affin_get(sntc):
-    res=score1(sntc,"affin")
+    res=score1(sntc,"afinn")
     return json.dumps({"scores":res},ensure_ascii=False) 
 
-@app.route('/api/v1.0/score/affin',methods=['POST'] )
+@app.route('/api/v1.0/score/afinn',methods=['POST'] )
 def score_affin_pos():
     text=request.data
-    res=score1(text,"affin")
+    res=score1(text,"afinn")
     return json.dumps({"scores":res},ensure_ascii=False) 
 
 def score_whissell(text):
